@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Basic reset and styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        /* Like Icon */
+        .like-icon {
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+            transition: color 0.3s;
+            background: none;
+            border: none;
+        }
+
+        .like-icon.liked {
+            color: #e74c3c; /* Red color for liked state */
+        }
+
+        .like-icon:hover {
+            color: #555;
+        }
+
+        .like-count {
+            margin-top: 10px;
+            font-size: 1.2em;
+        }
+
+        /* Other styles remain unchanged */
+        .post-content {
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .delete-button {
+            display: inline-block;
+            margin-top: 10px;
+            background-color: #e74c3c;
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #c0392b;
+        }
+
+        /* Comment Section */
+        .comment-section {
+            margin-top: 30px;
+        }
+
+        .comment-section h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .comment-list {
+            list-style: none;
+            margin-top: 15px;
+            padding-left: 0;
+        }
+
+        .comment-item {
+            background-color: #f1f1f1;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+            resize: vertical;
+        }
+
+        .comment-form button {
+            align-self: flex-start;
+            padding: 8px 16px;
+            border: none;
+            background-color: #333;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .comment-form button:hover {
+            background-color: #555;
+        }
+
+        .welcome-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.welcome-link:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'welcome_view' %}" class="welcome-link">Go to Welcome Page</a>
+
+        <h1>{{ post.title }}</h1>
+        <p class="author">Posted by: {{ post.author }}</p> <!-- Display the author's username -->
+
+        {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 100%; height: auto;">  <!-- Display image -->
+        {% endif %}
+        
+        <div class="post-content">{{ post.content }}</div>
+
+        <!-- Like Form -->
+        <form id="like-form" data-post-id="{{ post.id }}">
+            {% csrf_token %}
+            <button type="button" class="like-icon {% if user in post.likes.all %}liked{% endif %}">
+                <i class="fa{% if user in post.likes.all %}s{% else %}r{% endif %} fa-heart"></i>
+            </button>
+        </form>
+        
+        <p class="like-count">{{ post.likes.count }} likes</p>
+
+        <!-- Delete Button -->
+        {% if user == post.author %}
+        <a href="{% url 'delete_post' post.id %}" class="delete-button">Delete</a>
+        {% endif %}
+
+        <!-- Comment Section -->
+        <div class="comment-section">
+            <h3>Comments</h3>
+            <ul class="comment-list">
+                {% for comment in post.comments.all %}
+                <li class="comment-item">
+                    <div class="comment-author">{{ comment.user.username }}</div>
+                    <div class="comment-date">{{ comment.created_at|date:"F j, Y, g:i a" }}</div>
+                    <div class="comment-content">{{ comment.content }}</div>
+                </li>
+                {% empty %}
+                <p>No comments yet. Be the first to comment!</p>
+                {% endfor %}
+            </ul>
+            
+            <form id="comment-form" data-post-id="{{ post.id }}">
+                {% csrf_token %}
+                <textarea class="comment-form textarea" name="content" rows="3" placeholder="Write a comment..." required></textarea>
+                <button id="comment-form button" type="submit">Post Comment</button>
+            </form>
+            
+        </div>
+
+    </div>
+
+    <!-- jQuery Script -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+$(document).ready(function () {
+    // Like button AJAX functionality
+    $('#like-form').on('click', '.like-icon', function (e) {
+        e.preventDefault();
+        const postId = $('#like-form').data('post-id'); // Getting the post ID from the form data
+        const csrfToken = "{{ csrf_token }}";
+
+        $.ajax({
+            url: "{% url 'like_post' post.id %}", // Ensure the correct URL is generated for liking a post
+            method: "POST",
+            headers: {
+                'X-CSRFToken': csrfToken
+            },
+            success: function (response) {
+                const likeIcon = $(this);  // Get the clicked like icon
+                if (response.liked) {
+                    likeIcon.addClass('liked').find('i').removeClass('far').addClass('fas');
+                } else {
+                    likeIcon.removeClass('liked').find('i').removeClass('fas').addClass('far');
+                }
+                $('.like-count').text(`${response.likes_count} likes`); // Update the likes count
+            },
+            error: function (xhr, status, error) {
+                console.error("Error liking the post:", error);
+            }
+        });
+    });
+});
+
+$(document).ready(function () {
+    // Comment form AJAX functionality
+    $('#comment-form').on('submit', function (e) {
+        e.preventDefault();
+        const postId = $(this).data('post-id'); // Ensure post ID is correctly passed to the form
+        const csrfToken = "{{ csrf_token }}"; // Get the CSRF token
+        const content = $(this).find('textarea[name="content"]').val(); // Get the content from the textarea
+
+        $.ajax({
+            url: "{% url 'add_comment' post.id %}", // Ensure the correct URL for adding a comment
+            method: "POST",
+            headers: {
+                'X-CSRFToken': csrfToken
+            },
+            data: { content: content }, // Send the content of the comment
+            success: function (response) {
+                if (response.error) {
+                    console.error("Error adding comment:", response.error);
+                } else {
+                    const newComment = `
+                        <li class="comment-item">
+                            <div class="comment-author">${response.username}</div>
+                            <div class="comment-date">${response.created_at}</div>
+                            <div class="comment-content">${response.content}</div>
+                        </li>
+                    `;
+                    $('.comment-list').append(newComment); // Add the new comment dynamically
+                    $('#comment-form textarea').val(''); // Clear the textarea after submitting
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error adding comment:", error);
+            }
+        });
+    });
+});
+
+
+    </script>
+
+
+</body>
+
+</html>

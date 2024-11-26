@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1em 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header nav a {
+            color: white;
+            margin: 0 1em;
+            text-decoration: none;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .sidebar-post {
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 500px; /* Smaller width for each post */
+        }
+
+        .sidebar-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-post h3 {
+            margin: 5px 0;
+            font-size: 0.9em; /* Smaller font size */
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Blog</h1>
+        <nav>
+            <a href="{% url 'create_post' %}">Create New Post</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Sidebar for All Posts -->
+        <aside class="sidebar">
+            {% for post in posts %}
+            <div class="sidebar-post">
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="Image for {{ post.title }}" class="sidebar-image">
+                {% endif %}
+                <h3><a href="{% url 'view_post' post.id %}">{{ post.title }}</a></h3>
+            </div>
+            {% endfor %}
+        </aside>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Blog App. All rights reserved.</p>
+    </footer>
+</body>
+</html>
