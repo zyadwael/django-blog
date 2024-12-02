@@ -35,7 +35,7 @@ def welcome_view(request):
     
     # Retrieve all comments to pass to the template
     comments = Comment.objects.all()
-    return render(request, 'welcome.html', {'posts': posts, 'comments': comments})
+    return render(request, 'index.html', {'posts': posts, 'comments': comments})
 
 
 
@@ -56,6 +56,24 @@ def view_post(request, post_id):
         'comments': comments,
         'user_liked': request.user in post.likes.all()  # Check if the user already liked the post
     })
+
+
+def blog_search(request):
+    query = request.GET.get('q', '')
+    search_type = request.GET.get('search_type', 'title')
+
+    if search_type == 'title':
+        blog_posts = BlogPost.objects.filter(title__icontains=query)
+    elif search_type == 'content':
+        blog_posts = BlogPost.objects.filter(content__icontains=query)
+    elif search_type == 'author':
+        blog_posts = BlogPost.objects.filter(author__name__icontains=query)  # Assuming a related 'author' field
+    elif search_type == 'tags':
+        blog_posts = BlogPost.objects.filter(tags__name__icontains=query)  # Assuming a Many-to-Many 'tags' relationship
+    else:
+        blog_posts = BlogPost.objects.none()  # Return an empty queryset if no valid search type is selected
+
+    return render(request, 'blog_search.html', {'blog_posts': blog_posts, 'query': query})
 
 def register(request):
     if request.method == 'POST':

@@ -1,0 +1,11 @@
+<h1>Search Results for "{{ query }}"</h1>
+
+{% if blog_posts %}
+    <ul>
+        {% for post in blog_posts %}
+            <li>{{ post.title }} by {{ post.author }}</li>  <!-- Adjust based on your model -->
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No results found.</p>
+{% endif %}

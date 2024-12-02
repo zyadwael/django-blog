@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+<title>Net Full's Blog</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link href="static\style.css" rel="stylesheet" type="text/css" media="all">
+</head>
+<body id="top">
+<div class="wrapper row0">
+  <div id="topbar" class="hoc clear"> 
+    <ul class="nospace">
+      <li><a href="/"> Home</a></li>
+      {% if current_user.is_authenticated %}
+        <li><a href="/logout"></i> Logout</a></li>
+      {% else %}
+        <li><a href="/login"> Login</a></li>
+        <li><a href="/signup"> Sign Up</a></li>
+      {% endif %}
+    </ul>
+  </div>
+  
+</div>
+<div class="wrapper row1">
+  <header id="header" class="hoc clear">
+    <section> 
+      <div>+20 102 141 6862</div>
+      <div>
+        <h1 id="logo"><a href="index.html">NET FULL</a></h1>
+      </div>
+      <div>
+        <form class="clear" method="get" action="{% url 'blog_search' %}">
+            <fieldset>
+                <legend>Search:</legend>
+                <input type="search" name="q" value="" placeholder="Search Here&hellip;">
+                <button class="fa fa-search" type="submit" title="Search"><em>Search</em></button>
+            </fieldset>
+        </form>
+    </div>
+    
+    </section>
+    <nav id="mainav"> 
+      <ul class="clear">
+        <li class="active"><a href="index.html">Home</a></li>  
+        <li><a href="#">Link Text</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+<main class="container">
+  <aside class="sidebar">
+    {% for post in posts %}
+    <div class="sidebar-post" style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px; width: 300px;">
+        {% if post.image %}
+        <img src="{{ post.image.url }}" alt="Image for {{ post.title }}" style="max-width: 100%; height: auto;">
+        {% endif %}
+        <h4 style="font-size: 16px; margin: 10px 0;"><a href="{% url 'view_post' post.id %}">{{ post.title }}</a></h4>
+    </div>
+    {% endfor %}
+  </aside>
+</main>
+
+<div class="wrapper row4">
+  <footer id="footer" class="hoc clear"> 
+    <div class="one_quarter first">
+      <h6 class="heading">Contact Us</h6>
+      <ul class="nospace btmspace-30 linklist contact">
+        <li><i class="fa fa-map-marker"></i>
+          <address>
+            Street Name &amp; Number, Town, Postcode/Zip
+          </address>
+        </li>
+        <li><i class="fa fa-phone"></i> +20 102 141 6862</li>
+        <li><i class="fa fa-envelope-o"></i> netfull66@gmail.com</li>
+      </ul>
+      <ul class="faico clear">
+        <li><a class="faicon-facebook" href="https://facebook.com" target="_blank"><i class="fa fa-facebook"></i></a></li>
+        <li><a class="faicon-twitter" href="https://twitter.com" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="faicon-instagram" href="https://www.instagram.com/netfull1/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+        <li><a class="faicon-linkedin" href="https://linkedin.com" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+      </ul>
+    </div>
+    <div class="one_quarter">
+      <h6 class="heading">Quick Links</h6>
+      <ul class="nospace linklist">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+    <div class="one_quarter">
+      <h6 class="heading">Latest News</h6>
+      <article class="btmspace-30">
+        <h6 class="nospace font-x1"><a href="#">Company Updates</a></h6>
+        <time class="smallfont" datetime="2024-11-29">Wednesday, 29<sup>th</sup> November 2024</time>
+        <p>Learn more about our recent achievements and projects&hellip;</p>
+      </article>
+      <article>
+        <h6 class="nospace font-x1"><a href="#">Upcoming Events</a></h6>
+        <time class="smallfont" datetime="2024-12-01">Friday, 1<sup>st</sup> December 2024</time>
+        <p>Join us for our upcoming events and webinars&hellip;</p>
+      </article>
+    </div>
+    <div class="one_quarter">
+      <h6 class="heading">Subscribe to Our Newsletter</h6>
+      <p class="nospace btmspace-15">Stay updated with our latest news and offers. Subscribe now!</p>
+      <form method="post" action="#">
+        <fieldset>
+          <legend>Newsletter:</legend>
+          <input class="btmspace-15" type="text" value="" placeholder="Name">
+          <input class="btmspace-15" type="email" value="" placeholder="Email">
+          <button type="submit" value="submit">Submit</button>
+        </fieldset>
+      </form>
+    </div>
+    <div class="clear"></div>
+    <div class="center">
+      <p>&copy; 2024 Website by <strong>Net Full Inc.</strong> All rights reserved.</p>
+    </div>
+  </footer>
+  
+</div>
+<div class="wrapper row5">
+  <div id="copyright" class="hoc clear"> 
+    <p class="fl_left">Copyright &copy; 2018 - All Rights Reserved - <a href="#">Domain Name</a></p>
+    <p class="fl_right">Template by <a target="_blank" href="https://www.os-templates.com/" title="Free Website Templates">OS Templates</a></p>
+  </div>
+</div>
+<a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
+<script src="js\jquery.min.js"></script>
+<script src="js\jquery.backtotop.js"></script>
+<script src="js\jquery.mobilemenu.js"></script>
+</body>
+</html>
