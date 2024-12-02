@@ -65,55 +65,28 @@
     <div class="one_quarter first">
       <h6 class="heading">Contact Us</h6>
       <ul class="nospace btmspace-30 linklist contact">
-        <li><i class="fa fa-map-marker"></i>
-          <address>
-            Street Name &amp; Number, Town, Postcode/Zip
-          </address>
-        </li>
         <li><i class="fa fa-phone"></i> +20 102 141 6862</li>
         <li><i class="fa fa-envelope-o"></i> netfull66@gmail.com</li>
       </ul>
       <ul class="faico clear">
-        <li><a class="faicon-facebook" href="https://facebook.com" target="_blank"><i class="fa fa-facebook"></i></a></li>
-        <li><a class="faicon-twitter" href="https://twitter.com" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="faicon-facebook" href="https://web.facebook.com/profile.php?id=61561751296406" target="_blank"><i class="fa fa-facebook"></i></a></li>
         <li><a class="faicon-instagram" href="https://www.instagram.com/netfull1/" target="_blank"><i class="fa fa-instagram"></i></a></li>
-        <li><a class="faicon-linkedin" href="https://linkedin.com" target="_blank"><i class="fa fa-linkedin"></i></a></li>
       </ul>
     </div>
+
     <div class="one_quarter">
-      <h6 class="heading">Quick Links</h6>
-      <ul class="nospace linklist">
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#">Contact</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-      </ul>
-    </div>
-    <div class="one_quarter">
-      <h6 class="heading">Latest News</h6>
-      <article class="btmspace-30">
-        <h6 class="nospace font-x1"><a href="#">Company Updates</a></h6>
-        <time class="smallfont" datetime="2024-11-29">Wednesday, 29<sup>th</sup> November 2024</time>
-        <p>Learn more about our recent achievements and projects&hellip;</p>
-      </article>
-      <article>
-        <h6 class="nospace font-x1"><a href="#">Upcoming Events</a></h6>
-        <time class="smallfont" datetime="2024-12-01">Friday, 1<sup>st</sup> December 2024</time>
-        <p>Join us for our upcoming events and webinars&hellip;</p>
-      </article>
-    </div>
-    <div class="one_quarter">
-      <h6 class="heading">Subscribe to Our Newsletter</h6>
-      <p class="nospace btmspace-15">Stay updated with our latest news and offers. Subscribe now!</p>
-      <form method="post" action="#">
+      <p class="nospace btmspace-15">Contact Us </p>
+      <form method="post" action="{% url 'contact' %}">
+        {% csrf_token %}
         <fieldset>
-          <legend>Newsletter:</legend>
-          <input class="btmspace-15" type="text" value="" placeholder="Name">
-          <input class="btmspace-15" type="email" value="" placeholder="Email">
-          <button type="submit" value="submit">Submit</button>
+            <legend>Newsletter:</legend>
+            <input class="btmspace-15" type="text" name="name" value="" placeholder="Name" required>
+            <input class="btmspace-15" type="email" name="email" value="" placeholder="Email" required>
+            <textarea class="btmspace-15" name="message" placeholder="Message" required></textarea>
+            <button type="submit" value="submit">Submit</button>
         </fieldset>
-      </form>
+    </form>
+    
     </div>
     <div class="clear"></div>
     <div class="center">
@@ -121,12 +94,6 @@
     </div>
   </footer>
   
-</div>
-<div class="wrapper row5">
-  <div id="copyright" class="hoc clear"> 
-    <p class="fl_left">Copyright &copy; 2018 - All Rights Reserved - <a href="#">Domain Name</a></p>
-    <p class="fl_right">Template by <a target="_blank" href="https://www.os-templates.com/" title="Free Website Templates">OS Templates</a></p>
-  </div>
 </div>
 <a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
 <script src="js\jquery.min.js"></script>

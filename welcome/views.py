@@ -6,7 +6,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.http import JsonResponse
-
+from django.core.mail import send_mail
+from django.conf import settings
+from .forms import ContactForm
 
 
 
@@ -74,6 +76,32 @@ def blog_search(request):
         blog_posts = BlogPost.objects.none()  # Return an empty queryset if no valid search type is selected
 
     return render(request, 'blog_search.html', {'blog_posts': blog_posts, 'query': query})
+
+
+
+def contact(request):
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+
+            # Sending email
+            send_mail(
+                subject=f"Blog Contact from {name}",
+                message=message,
+                from_email=email,  # Using the sender's email
+                recipient_list=[settings.DEFAULT_FROM_EMAIL],  # Your email here
+                fail_silently=False,
+            )
+
+            # Redirect or render a success page
+            return render(request, 'contact_success.html', {'name': name})
+    else:
+        form = ContactForm()
+
+    return render(request, 'contact.html', {'form': form})
 
 def register(request):
     if request.method == 'POST':
