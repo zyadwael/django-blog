@@ -2,107 +2,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Contact Us - Net Full</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact</title>
-    <style>
-        /* General body styling */
-        body {
-            font-family: 'Courier New', Courier, monospace;
-            background-color: #1e1e1e;
-            color: #dcdcdc;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        /* Styling the container */
-        .container {
-            background: #2d2d2d;
-            padding: 30px 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            width: 400px;
-            text-align: center;
-            border: 1px solid #3c3c3c;
-        }
-
-        /* Page title styling */
-        h1 {
-            font-size: 2rem;
-            color: #61dafb;
-            margin-bottom: 20px;
-            text-shadow: 0 0 5px #61dafb, 0 0 10px #61dafb;
-        }
-
-        /* Form styling */
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        form p {
-            margin-bottom: 15px;
-        }
-
-        form label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-            color: #8ec07c;
-        }
-
-        form input,
-        form textarea {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #3c3c3c;
-            border-radius: 5px;
-            background-color: #1e1e1e;
-            color: #dcdcdc;
-        }
-
-        form textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        form input::placeholder,
-        form textarea::placeholder {
-            color: #555;
-        }
-
-        /* Button styling */
-        .btn {
-            background-color: #61dafb;
-            color: #1e1e1e;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-
-        .btn:hover {
-            background-color: #8ec07c;
-            transform: scale(1.05);
-        }
-    </style>
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css" media="all">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <h1>Contact Me</h1>
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn">Send Message</button>
-        </form>
+<body id="top">
+    <!-- Navbar -->
+    <div class="wrapper row0">
+        <div id="topbar" class="hoc clear"> 
+            <ul class="nospace">
+                <li><a href="/">Home</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="/logout">Logout</a></li>
+                {% else %}
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
+    <div class="wrapper row1">
+        <header id="header" class="hoc clear">
+            <section> 
+                <div>+20 102 141 6862</div>
+                <div>
+                    <h1 id="logo"><a href="/">NET FULL</a></h1>
+                </div>
+                <div>
+                    <form class="clear" method="get" action="{% url 'blog_search' %}">
+                        <fieldset>
+                            <legend>Search:</legend>
+                            <input type="search" name="q" value="" placeholder="Search Here&hellip;">
+                            <button class="fa fa-search" type="submit" title="Search"><em>Search</em></button>
+                        </fieldset>
+                    </form>
+                </div>
+            </section>
+            <nav id="mainav"> 
+                <ul class="clear">
+                    <li><a href="/">Home</a></li>
+                    <li class="active"><a href="{% url 'contact' %}">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+    </div>
+
+    <!-- Contact Form -->
+    <main class="container">
+        <div class="contact-form" style="margin: 50px auto; max-width: 600px; padding: 20px; background-color: white; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);">
+            <h2 style="text-align: center; color: black; margin-bottom: 20px;">Contact Us</h2>
+            <form method="POST" action="{% url 'contact' %}">
+                {% csrf_token %}
+                <p>
+                    <label for="name" style="color: black;">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your Name" required>
+                </p>
+                <p>
+                    <label for="email" style="color: black;">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Your Email" required>
+                </p>
+                <p>
+                    <label for="message" style="color:black;">Message</label>
+                    <textarea id="message" name="message" placeholder="Write your message here..." required></textarea>
+                </p>
+                <p style="text-align: center;">
+                    <button type="submit" style="color: white; background-color: #FFA41F; border-color: #FFA41F; border: 1px solid #FFA41F; padding: 10px 20px; cursor: pointer; text-align: center; display: inline-block; font-size: 16px; font-family: Arial, sans-serif; transition: background-color 0.3s, border-color 0.3s;">Send Message</button>
+                </p>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div class="wrapper row4">
+        <footer id="footer" class="hoc clear"> 
+          <div class="one_quarter first">
+            <h6 class="heading">Contact Us</h6>
+            <ul class="nospace btmspace-30 linklist contact">
+              <li><i class="fa fa-phone"></i> +20 102 141 6862</li>
+              <li><i class="fa fa-envelope-o"></i> netfull66@gmail.com</li>
+            </ul>
+            <ul class="faico clear">
+              <li><a class="faicon-facebook" href="https://web.facebook.com/profile.php?id=61561751296406" target="_blank"><i class="fab fa-facebook"></i></a></li>
+              <li><a class="faicon-instagram" href="https://www.instagram.com/netfull1/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+            </ul>
+          </div>
+      
+          <div class="one_quarter">
+            <p class="nospace btmspace-15">Contact Us </p>
+            <form method="post" action="{% url 'contact' %}">
+              {% csrf_token %}
+              <fieldset>
+                  <legend>Newsletter:</legend>
+                  <input class="btmspace-15" type="text" name="name" value="" placeholder="Name" required>
+                  <input class="btmspace-15" type="email" name="email" value="" placeholder="Email" required>
+                  <textarea class="btmspace-15" name="message" placeholder="Message" required></textarea>
+                  <button type="submit" value="submit">Submit</button>
+              </fieldset>
+          </form>
+          
+          </div>
+          <div class="clear"></div>
+          <div class="center">
+            <p>&copy; 2024 Website by <strong>Net Full Inc.</strong> All rights reserved.</p>
+          </div>
+        </footer>
+        
+      </div>
+
+    <a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backtotop.js' %}"></script>
+    <script src="{% static 'js/jquery.mobilemenu.js' %}"></script>
 </body>
 </html>

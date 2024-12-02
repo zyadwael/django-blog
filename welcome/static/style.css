@@ -152,36 +152,17 @@ File: Layout CSS
 #footer button{padding:8px 18px 10px; text-transform:uppercase; font-weight:700; cursor:pointer;}
 
 
-/* Copyright
---------------------------------------------------------------------------------------------------------------- */
 #copyright{padding:20px 0;}
 #copyright *{margin:0; padding:0;}
 
 
-/* Transition Fade
-This gives a smooth transition to "ALL" elements used in the layout - other than the navigation form used in mobile devices
-If you don't want it to fade all elements, you have to list the ones you want to be faded individually
-Delete it completely to stop fading
---------------------------------------------------------------------------------------------------------------- */
 *, *::before, *::after{transition:all .3s ease-in-out;}
 #mainav form *{transition:none !important;}
-
-
-/* ------------------------------------------------------------------------------------------------------------ */
-/* ------------------------------------------------------------------------------------------------------------ */
-/* ------------------------------------------------------------------------------------------------------------ */
-/* ------------------------------------------------------------------------------------------------------------ */
-/* ------------------------------------------------------------------------------------------------------------ */
-
-
-/* Navigation
---------------------------------------------------------------------------------------------------------------- */
 nav ul, nav ol{margin:0; padding:0; list-style:none;}
 
 #mainav, #breadcrumb, .sidebar nav{line-height:normal;}
 #mainav .drop::after, #mainav li li .drop::after, #breadcrumb li a::after, .sidebar nav a::after{position:absolute; font-family:"FontAwesome"; font-size:10px; line-height:10px;}
 
-/* Top Navigation */
 #mainav{border:solid; border-width:1px 0;}
 #mainav ul{text-transform:uppercase; text-align:center;}
 #mainav ul ul{z-index:9999; position:absolute; width:160px; text-transform:none; text-align:left;}
@@ -204,7 +185,6 @@ nav ul, nav ol{margin:0; padding:0; list-style:none;}
 #mainav form select{width:100%; padding:5px; border:1px solid;}
 #mainav form select option{margin:5px; padding:0; border:none;}
 
-/* Breadcrumb */
 #breadcrumb{padding:180px 0 30px;}
 #breadcrumb ul{margin:0 0 30px 0; padding:0 0 8px 0; list-style:none; text-transform:uppercase; border-bottom:1px solid;}
 #breadcrumb li{display:inline-block; margin:0 6px 0 0; padding:0;}
@@ -214,7 +194,6 @@ nav ul, nav ol{margin:0; padding:0; list-style:none;}
 #breadcrumb li:last-child a::after{display:none;}
 #breadcrumb .heading{margin:0; font-size:2rem;}
 
-/* Sidebar Navigation */
 .sidebar nav{display:block; width:100%;}
 .sidebar nav li{margin:0 0 3px 0; padding:0;}
 .sidebar nav a{display:block; position:relative; margin:0; padding:5px 10px 5px 15px; text-decoration:none; border:solid; border-width:0 0 1px 0;}
@@ -224,21 +203,17 @@ nav ul, nav ol{margin:0; padding:0; list-style:none;}
 .sidebar nav ul ul ul a{padding-left:55px;}
 .sidebar nav ul ul ul a::after{left:45px;}
 
-/* Pagination */
 .pagination{display:block; width:100%; text-align:center; clear:both;}
 .pagination li{display:inline-block; margin:0 2px 0 0;}
 .pagination li:last-child{margin-right:0;}
 .pagination a, .pagination strong{display:block; padding:8px 11px; border:1px solid; background-clip:padding-box; font-weight:normal;}
 
-/* Back to Top */
 #backtotop{z-index:999; display:inline-block; position:fixed; visibility:hidden; bottom:20px; right:20px; width:36px; height:36px; line-height:36px; font-size:16px; text-align:center; opacity:.2;}
 #backtotop i{display:block; width:100%; height:100%; line-height:inherit;}
 #backtotop.visible{visibility:visible; opacity:.5;}
 #backtotop:hover{opacity:1;}
 
 
-/* Tables
---------------------------------------------------------------------------------------------------------------- */
 table, th, td{border:1px solid; border-collapse:collapse; vertical-align:top;}
 table, th{table-layout:auto;}
 table{width:100%; margin-bottom:15px;}
@@ -246,15 +221,11 @@ th, td{padding:5px 8px;}
 td{border-width:0 1px;}
 
 
-/* Gallery
---------------------------------------------------------------------------------------------------------------- */
 #gallery{display:block; width:100%; margin-bottom:50px;}
 #gallery figure figcaption{display:block; width:100%; clear:both;}
 #gallery li{margin-bottom:30px;}
 
 
-/* Font Awesome Social Icons
---------------------------------------------------------------------------------------------------------------- */
 .faico{margin:0; padding:0; list-style:none;}
 .faico li{display:inline-block; margin:8px 5px 0 0; padding:0; line-height:normal;}
 .faico li:last-child{margin-right:0;}
@@ -271,15 +242,6 @@ td{border-width:0 1px;}
 .faicon-vk:hover{background-color:#4E658E;}
 
 
-/* ------------------------------------------------------------------------------------------------------------ */
-/* ------------------------------------------------------------------------------------------------------------ */
-/* ------------------------------------------------------------------------------------------------------------ */
-/* ------------------------------------------------------------------------------------------------------------ */
-/* ------------------------------------------------------------------------------------------------------------ */
-
-
-/* Colours
---------------------------------------------------------------------------------------------------------------- */
 body{color:#7A7A7A; background-color:#FFFFFF;}
 a{color:#FFA41F;}
 a:active, a:focus{background:transparent;}/* IE10 + 11 Bugfix - prevents grey background */
@@ -298,7 +260,6 @@ input:focus, textarea:focus, *:required:focus{border-color:#FFA41F;}
 .btn:hover, .btn.inverse{color:inherit; background-color:transparent; border-color:inherit;}
 
 
-/* Rows */
 .row0, .row0 a{color:#FFFFFF; background-color:#FFA41F;}
 .row1{color:#7A7A7A; background-color:#FFFFFF;}
 .row2{color:#7A7A7A; background-color:#F7F7F7;}
@@ -309,7 +270,6 @@ input:focus, textarea:focus, *:required:focus{border-color:#FFA41F;}
 .row2 .heading, .row3 .heading{color:#121212;}
 
 
-/* Header */
 #header #logo a{color:inherit;}
 #header section input, #header section button{border-color:#F2F2F2;}
 #header section input:focus{border-color:#FFA41F;}
@@ -317,11 +277,8 @@ input:focus, textarea:focus, *:required:focus{border-color:#FFA41F;}
 #header #mainav{border-color:rgba(0,0,0,.1);}
 
 
-/* Page Intro */
 #pageintro article{color:#121212; background-color:rgba(255,255,255,.7);}
 
-
-/* Content Area */
 .services a{color:inherit;}
 .services article:hover a{color:#FFA41F;}
 
@@ -332,7 +289,6 @@ input:focus, textarea:focus, *:required:focus{border-color:#FFA41F;}
 .latest article .excerpt{border-color:#D7D7D7;}
 
 
-/* Footer */
 #footer .heading{color:#FFFFFF;}
 #footer hr, #footer .borderedbox, #footer .linklist li{border-color:rgba(0,0,0,.1);}
 
@@ -342,7 +298,6 @@ input:focus, textarea:focus, *:required:focus{border-color:#FFA41F;}
 #footer button{color:#FFFFFF; background-color:#FFA41F;}
 
 
-/* Navigation */
 #mainav li a{color:inherit;}
 #mainav .active a, #mainav a:hover, #mainav li:hover > a{color:#FFA41F; background-color:inherit;}
 #mainav li li a, #mainav .active li a{color:#FFFFFF; background-color:rgba(0,0,0,.6); border-color:rgba(0,0,0,.3);}
@@ -362,7 +317,6 @@ input:focus, textarea:focus, *:required:focus{border-color:#FFA41F;}
 #backtotop{color:#FFFFFF; background-color:#FFA41F;}
 
 
-/* Tables + Comments */
 table, th, td, #comments .avatar, #comments input, #comments textarea{border-color:#D7D7D7;}
 #comments input:focus, #comments textarea:focus, #comments *:required:focus{border-color:#FFA41F;}
 th{color:#FFFFFF; background-color:#373737;}
@@ -371,27 +325,13 @@ tr:nth-child(even), #comments li:nth-child(even){color:inherit; background-color
 table a, #comments a{background-color:inherit;}
 
 
-/* ------------------------------------------------------------------------------------------------------------ */
-/* ------------------------------------------------------------------------------------------------------------ */
-/* ------------------------------------------------------------------------------------------------------------ */
-/* ------------------------------------------------------------------------------------------------------------ */
-/* ------------------------------------------------------------------------------------------------------------ */
-
-
-/* Media Queries
---------------------------------------------------------------------------------------------------------------- */
 @-ms-viewport{width:device-width;}
 
 
-/* Max Wrapper Width - Laptop, Desktop etc.
---------------------------------------------------------------------------------------------------------------- */
 @media screen and (min-width:978px){
 	.hoc{max-width:978px;}
 }
 
-
-/* Mobile Devices
---------------------------------------------------------------------------------------------------------------- */
 @media screen and (max-width:900px){
 	.hoc{max-width:90%;}
 
@@ -440,8 +380,6 @@ table a, #comments a{background-color:inherit;}
 }
 
 
-/* Other
---------------------------------------------------------------------------------------------------------------- */
 @media screen and (max-width:650px){
 	.scrollable{display:block; width:100%; margin:0 0 30px 0; padding:0 0 15px 0; overflow:auto; overflow-x:scroll;}
 	.scrollable table{margin:0; padding:0; white-space:nowrap;}
@@ -454,4 +392,16 @@ table a, #comments a{background-color:inherit;}
 
 	#header section, #header section > div{display:block; width:100%;}
 	#header section > div{width:100%; margin-bottom:30px; text-align:center;}
+}
+
+
+
+.faicon-facebook i, .faicon-instagram i {
+    font-size: 20px; /* Adjust size */
+    color: #4267B2; /* Facebook Blue */
+    margin-right: 10px;
+}
+
+.faicon-instagram i {
+    color: #C13584; /* Instagram Pink */
 }
