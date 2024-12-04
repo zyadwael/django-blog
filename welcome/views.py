@@ -16,31 +16,30 @@ from django.contrib import messages
 
 @login_required
 def welcome_view(request):
-    posts = BlogPost.objects.all()
-    
+    posts = BlogPost.objects.all().distinct()
+    post_comments_data = {}
+
+    for post in posts:
+        comment_count = Comment.objects.filter(post=post).count()
+        print(f"Post ID: {post.id}, Comment Count: {comment_count}")  # Debugging
+        post_comments_data[post.id] = comment_count
+
     if request.method == 'POST':
-        # Get the post ID from the form submission
         post_id = request.POST.get('post_id')
         post = get_object_or_404(BlogPost, id=post_id)
-        
-        # Get the comment content from the form
         content = request.POST.get('content')
-        
-        # Only create a comment if content is provided
         if content:
             Comment.objects.create(
                 user=request.user,
                 post=post,
                 content=content
             )
-        
-        # Redirect back to the same view to avoid form resubmission issues
         return redirect('welcome')
-    
-    # Retrieve all comments to pass to the template
-    comments = Comment.objects.all()
-    return render(request, 'index.html', {'posts': posts, 'comments': comments})
 
+    return render(request, 'index.html', {
+        'posts': posts,
+        'post_comments_data': post_comments_data,
+    })
 
 
 @login_required
@@ -55,7 +54,7 @@ def view_post(request, post_id):
             Comment.objects.create(user=request.user, post=post, content=content)
             return redirect('view_post', post_id=post.id)  # Redirect to the same post to avoid form resubmission
 
-    return render(request, 'post.html', {
+    return render(request, 'post-details.html', {
         'post': post,
         'comments': comments,
         'user_liked': request.user in post.likes.all()  # Check if the user already liked the post
