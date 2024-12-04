@@ -16,13 +16,11 @@ from django.contrib import messages
 
 @login_required
 def welcome_view(request):
-    posts = BlogPost.objects.all().distinct()
-    post_comments_data = {}
-
+    posts = BlogPost.objects.all()
     for post in posts:
-        comment_count = Comment.objects.filter(post=post).count()
-        print(f"Post ID: {post.id}, Comment Count: {comment_count}")  # Debugging
-        post_comments_data[post.id] = comment_count
+        comments = post.comments.all()  # Get all comments related to this post
+        comments_count = comments.count()  # Count the number of comments
+
 
     if request.method == 'POST':
         post_id = request.POST.get('post_id')
@@ -38,7 +36,8 @@ def welcome_view(request):
 
     return render(request, 'index.html', {
         'posts': posts,
-        'post_comments_data': post_comments_data,
+        'comments_count': comments_count,  # Pass the count of comments to the template
+
     })
 
 
@@ -46,6 +45,7 @@ def welcome_view(request):
 def view_post(request, post_id):
     post = get_object_or_404(BlogPost, id=post_id)
     comments = post.comments.all()  # Get all comments related to this post
+    comments_count = comments.count()  # Count the number of comments
 
     if request.method == 'POST':
         # Handle adding a new comment
@@ -57,6 +57,7 @@ def view_post(request, post_id):
     return render(request, 'post-details.html', {
         'post': post,
         'comments': comments,
+        'comments_count': comments_count,  # Pass the count of comments to the template
         'user_liked': request.user in post.likes.all()  # Check if the user already liked the post
     })
 
