@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.conf import settings
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField
@@ -30,13 +31,22 @@ def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
+            # Extracting form data
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+
+            # Send the email
             send_mail(
-                f"Inquiry from {form.cleaned_data['name']}",
-                form.cleaned_data['message'],
-                form.cleaned_data['email'],
-                ['zyadwael2009@gmail.com'],  # Replace with your email
+                subject=f"Inquiry from {name}",
+                message=f"Message from {name} ({email}):\n\n{message}",
+                from_email=settings.DEFAULT_FROM_EMAIL,  # Use your verified email
+                recipient_list=['zyadwael2009@gmail.com'],  # Replace with your email
+                fail_silently=False,
             )
-            return render(request, 'portfolio/contact_success.html')
+
     else:
         form = ContactForm()
-    return render(request, 'portfolio/contact.html', {'form': form})
+
+    return render(request, 'contact.html', {'form': form})
+

@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
 
-    <title>Stand Blog - Contact Page</title>
+    <title>Contact Us</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
@@ -22,6 +22,19 @@
     <link rel="stylesheet" href="{% static 'fontawesome.css' %}">
     <link rel="stylesheet" href="{% static 'templatemo-stand-blog.css' %}">
     <link rel="stylesheet" href="{% static 'owl.css' %}">
+    <style>
+      .navbar-brand {
+        text-align: center;
+        display: inline-block;
+      }
+      
+      .navbar-logo {
+        max-width: 100px; /* Adjust image size */
+        display: block;
+        margin: 0 auto;
+      }
+      
+      </style>
 <!--
 
 TemplateMo 551 Stand Blog
@@ -33,42 +46,33 @@ https://templatemo.com/tm-551-stand-blog
 
   <body>
 
-    <!-- ***** Preloader Start ***** -->
-    <div id="preloader">
-        <div class="jumper">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>  
-    <!-- ***** Preloader End ***** -->
+
 
     <!-- Header -->
     <header class="">
       <nav class="navbar navbar-expand-lg">
-        <div class="container">
-          <a class="navbar-brand" href="index.html"><h2>Stand Blog<em>.</em></h2></a>
+        <div class="container text-center">
+          <a class="navbar-brand" href="/">
+            <img src="{% static 'assets\images\netfull.png' %}" alt="" class="navbar-logo">
+          </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="index.html">Home
+              <li class="nav-item active">
+                <a class="nav-link" href="/">Home
                   <span class="sr-only">(current)</span>
                 </a>
-              </li> 
-              <li class="nav-item">
-                <a class="nav-link" href="about.html">About Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="blog.html">Blog Entries</a>
+                <a class="nav-link" href="/about">About Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="post-details.html">Post Details</a>
+                <a class="nav-link" href="/blog">Blog Entries</a>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="contact.html">Contact Us</a>
+              <li class="nav-item">
+                <a class="nav-link" href="/contact">Contact Us</a>
               </li>
             </ul>
           </div>
@@ -78,20 +82,9 @@ https://templatemo.com/tm-551-stand-blog
 
     <!-- Page Content -->
     <!-- Banner Starts Here -->
-    <div class="heading-page header-text">
       <section class="page-heading">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="text-content">
-                <h4>contact us</h4>
-                <h2>let’s stay in touch!</h2>
-              </div>
-            </div>
-          </div>
-        </div>
+
       </section>
-    </div>
     
     <!-- Banner Ends Here -->
 
@@ -109,7 +102,9 @@ https://templatemo.com/tm-551-stand-blog
                       <h2>Send us a message</h2>
                     </div>
                     <div class="content">
-                      <form id="contact" action="" method="post">
+                      <form id="contact" action="{% url 'contact' %}" method="post">
+                        {% csrf_token %}
+
                         <div class="row">
                           <div class="col-md-6 col-sm-12">
                             <fieldset>
@@ -149,17 +144,12 @@ https://templatemo.com/tm-551-stand-blog
                     <div class="content">
                       <ul>
                         <li>
-                          <h5>090-484-8080</h5>
+                          <h5>+20 102 141 6862</h5>
                           <span>PHONE NUMBER</span>
                         </li>
                         <li>
-                          <h5>info@company.com</h5>
+                          <h5>netfull66@gmail.com</h5>
                           <span>EMAIL ADDRESS</span>
-                        </li>
-                        <li>
-                          <h5>123 Aenean id posuere dui, 
-                          	<br>Praesent laoreet 10660</h5>
-                          <span>STREET ADDRESS</span>
                         </li>
                       </ul>
                     </div>
@@ -168,13 +158,6 @@ https://templatemo.com/tm-551-stand-blog
               </div>
             </div>
           </div>
-          
-          <div class="col-lg-12">
-            <div id="map">
-              <iframe src="https://maps.google.com/maps?q=Av.+L%C3%BAcio+Costa,+Rio+de+Janeiro+-+RJ,+Brazil&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="450px" frameborder="0" style="border:0" allowfullscreen></iframe>
-            </div>
-          </div>
-          
         </div>
       </div>
     </section>
@@ -185,35 +168,31 @@ https://templatemo.com/tm-551-stand-blog
         <div class="row">
           <div class="col-lg-12">
             <ul class="social-icons">
-              <li><a href="#">Facebook</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Behance</a></li>
-              <li><a href="#">Linkedin</a></li>
-              <li><a href="#">Dribbble</a></li>
+              <li><a href="https://www.facebook.com/profile.php?id=61561751296406">Facebook</a></li>
+              <li><a href="https://www.instagram.com/netfull1/">Instgram</a></li>
             </ul>
           </div>
           <div class="col-lg-12">
             <div class="copyright-text">
-              <p>Copyright 2020 Stand Blog Co.
-                    
-                 | Design: <a rel="nofollow" href="https://templatemo.com" target="_parent">TemplateMo</a></p>
-            </div>
+              <p>Made By Net Full
+
+              </div>
           </div>
         </div>
       </div>
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
-    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js\jquery.min.js' %}"></script>
+    <script src="{% static 'js\bootstrap.bundle.min.js' %}"></script>
 
 
     <!-- Additional Scripts -->
-    <script src="{% static 'assets/js/costom.js' %}"></script>
-    <script src="{% static 'assets/js/sowl.js' %}"></script>
-    <script src="{% static 'assets/js/slick.js' %}"></script>
-    <script src="{% static 'assets/js/isotop.js' %}"></script>
-    <script src="{% static 'assets/js/accordions.js' %}"></script>
+    <script src="{% static 'js\costom.js' %}"></script>
+    <script src="{% static 'js\sowl.js' %}"></script>
+    <script src="{% static 'js\slick.js' %}"></script>
+    <script src="{% static 'js\isotop.js' %}"></script>
+    <script src="{% static 'js\accordions.js' %}"></script>
 
 
     <script language = "text/Javascript"> 

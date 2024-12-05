@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   {% load static %}
-
   <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -15,51 +13,61 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
 
+    <style>
+      .view-all-comments-btn {
+        margin-top: 10px;
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
 
+      .view-all-comments-btn:hover {
+        background-color: #0056b3;
+      }
 
+      .navbar-brand {
+        text-align: center;
+        display: inline-block;
+      }
+      
+      .navbar-logo {
+        max-width: 100px; /* Adjust image size */
+        display: block;
+        margin: 0 auto;
+      }
+    </style>
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="{% static 'flex-slider.css' %}">
     <link rel="stylesheet" href="{% static 'fontawesome.css' %}">
     <link rel="stylesheet" href="{% static 'templatemo-stand-blog.css' %}">
     <link rel="stylesheet" href="{% static 'owl.css' %}">
-<!--
-
-TemplateMo 551 Stand Blog
-
-https://templatemo.com/tm-551-stand-blog
-
--->
   </head>
 
   <body>
-
-    <!-- ***** Preloader Start ***** -->
-
-    <!-- ***** Preloader End ***** -->
-
-    <!-- Header -->
     <header class="">
       <nav class="navbar navbar-expand-lg">
-        <div class="container">
-          <a class="navbar-brand" href="/"><h2>Net Full<em>.</em></h2></a>
+        <div class="container text-center">
+          <a class="navbar-brand" href="/">
+            <img src="{% static 'assets/images/netfull.png' %}" alt="" class="navbar-logo">
+          </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a class="nav-link" href="/">Home
                   <span class="sr-only">(current)</span>
                 </a>
-              </li> 
-              <li class="nav-item">
-                <a class="nav-link" href="about.html">About Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="blog.html">Blog Entries</a>
+                <a class="nav-link" href="/about">About Us</a>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="/post/{{post.id}}">Post Details</a>
+              <li class="nav-item">
+                <a class="nav-link" href="/blog">Blog Entries</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/contact">Contact Us</a>
@@ -70,31 +78,7 @@ https://templatemo.com/tm-551-stand-blog
       </nav>
     </header>
 
-    <!-- Page Content -->
-
-
-    <section class="call-to-action">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="main-content">
-              <div class="row">
-                <div class="col-lg-8">
-                  <span>Stand Blog HTML5 Template</span>
-                  <h4>Creative HTML Template For Bloggers!</h4>
-                </div>
-                <div class="col-lg-4">
-                  <div class="main-button">
-                    <a rel="nofollow" href="https://templatemo.com/tm-551-stand-blog" target="_parent">Download Now!</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
+    <div class="heading-page header-text"></div>
 
     <section class="blog-posts grid-system">
       <div class="container">
@@ -107,43 +91,67 @@ https://templatemo.com/tm-551-stand-blog
                     <div class="blog-thumb">
                       {% if post.image %}
                       <img src="{{post.image.url}}" alt="">
+                      {% endif %}
                     </div>
-                    {% endif %}
                     <div class="down-content">
                       <span>{{post.title}}</span>
                       <a href="post-details.html"><h4>{{post.content}}</h4></a>
                       <ul class="post-info">
                         <li><a href="#">{{post.author}}</a></li>
-                        <li><a href="#">{{post.publication_date}} </a></li>
+                        <li><a href="#">{{post.publication_date}}</a></li>
                         <li><a href="#">{{comments_count}} Comments</a></li>
                       </ul>
-                      <div class="post-options">
-                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-12">
-                  <div class="sidebar-item comments">
-                    <div class="sidebar-heading">
-                      <h2>{{comments_count}} Comments</h2>
-                    </div>
-                    <div class="content">
-                      <ul>
-                        <li>
-                          {% for comment in comments %}
-                          <div class="author-thumb">
-                            <img src="{% static 'assets/images/comment-author-01.jpg' %}" alt="">
-                          </div>
-                          <div class="right-content">
-                            <h4>{{comment.user}}<span>{{comment.created_at}}</span></h4>
-                            <p>{{comment.content}}</p>
-                          </div>
-                          {% endfor %}
-                        </li>
-                      </ul>
-                    </div>
+
+                <div class="sidebar-item comments">
+                  <div class="sidebar-heading">
+                    <h2>{{ comments_count }} Comments</h2>
+                  </div>
+                  <div class="content">
+                    <ul id="comments-list" style="list-style: none; padding: 0;">
+                      {% for comment in comments %}
+                      <li style="margin-bottom: 15px; display: flex; align-items: center;">
+                        <div class="author-thumb" style="margin-right: 8px; flex-shrink: 0;">
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" 
+                               alt="Unknown User" style="width: 50px; height: 50px; border-radius: 50%;">
+                        </div>
+                        <div class="right-content">
+                          <h4 style="margin: 0; font-size: 16px;">{{ comment.user }}
+                            <span style="font-size: 12px; color: #888; margin-left: 5px;">{{ comment.created_at }}</span>
+                          </h4>
+                          <p style="margin: 5px 0; font-size: 14px;">{{ comment.content }}</p>
+                        </div>
+                      </li>
+                      {% endfor %}
+                    </ul>
+                    
+                    {% if comments_count > 4 %}
+                    <a href="javascript:void(0);" id="view-all-comments" style="font-size: 14px; color: #007bff; text-decoration: none;">View All Comments</a>
+                    <ul id="all-comments-list" style="list-style: none; padding: 0; display: none;">
+                      {% for comment in comments.all %}
+                      <li style="margin-bottom: 15px; display: flex; align-items: center;">
+                        <div class="author-thumb" style="margin-right: 8px; flex-shrink: 0;">
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" 
+                               alt="Unknown User" style="width: 50px; height: 50px; border-radius: 50%;">
+                        </div>
+                        <div class="right-content">
+                          <h4 style="margin: 0; font-size: 16px;">{{ comment.user }}
+                            <span style="font-size: 12px; color: #888; margin-left: 5px;">{{ comment.created_at }}</span>
+                          </h4>
+                          <p style="margin: 5px 0; font-size: 14px;">{{ comment.content }}</p>
+                        </div>
+                      </li>
+                      {% endfor %}
+                    </ul>
+                    
+                    {% endif %}
                   </div>
                 </div>
+                
+
+
                 <div class="col-lg-12">
                   <div class="sidebar-item submit-comment">
                     <div class="sidebar-heading">
@@ -160,18 +168,18 @@ https://templatemo.com/tm-551-stand-blog
                           </div>
                           <div class="col-lg-12">
                             <fieldset>
-                              <button type="button" id="submit-comment" class="main-button">Submit</button>
+                              <button type="button" id="submit-comment" class="main-button">Comment</button>
                             </fieldset>
                           </div>
                         </div>
                       </form>
-                      
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
           <div class="col-lg-4">
             <div class="sidebar">
               <div class="row">
@@ -182,6 +190,7 @@ https://templatemo.com/tm-551-stand-blog
                     </form>
                   </div>
                 </div>
+
                 <div class="col-lg-12">
                   <div class="sidebar-item recent-posts">
                     <div class="sidebar-heading">
@@ -189,53 +198,14 @@ https://templatemo.com/tm-551-stand-blog
                     </div>
                     <div class="content">
                       <ul>
-                        <li><a href="post-details.html">
-                          <h5>Vestibulum id turpis porttitor sapien facilisis scelerisque</h5>
-                          <span>May 31, 2020</span>
-                        </a></li>
-                        <li><a href="post-details.html">
-                          <h5>Suspendisse et metus nec libero ultrices varius eget in risus</h5>
-                          <span>May 28, 2020</span>
-                        </a></li>
-                        <li><a href="post-details.html">
-                          <h5>Swag hella echo park leggings, shaman cornhole ethical coloring</h5>
-                          <span>May 14, 2020</span>
-                        </a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="sidebar-item categories">
-                    <div class="sidebar-heading">
-                      <h2>Categories</h2>
-                    </div>
-                    <div class="content">
-                      <ul>
-                        <li><a href="#">- Nature Lifestyle</a></li>
-                        <li><a href="#">- Awesome Layouts</a></li>
-                        <li><a href="#">- Creative Ideas</a></li>
-                        <li><a href="#">- Responsive Templates</a></li>
-                        <li><a href="#">- HTML5 / CSS3 Templates</a></li>
-                        <li><a href="#">- Creative &amp; Unique</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="sidebar-item tags">
-                    <div class="sidebar-heading">
-                      <h2>Tag Clouds</h2>
-                    </div>
-                    <div class="content">
-                      <ul>
-                        <li><a href="#">Lifestyle</a></li>
-                        <li><a href="#">Creative</a></li>
-                        <li><a href="#">HTML5</a></li>
-                        <li><a href="#">Inspiration</a></li>
-                        <li><a href="#">Motivation</a></li>
-                        <li><a href="#">PSD</a></li>
-                        <li><a href="#">Responsive</a></li>
+                        {% for post in recent_posts %}
+                        <li>
+                          <a href="post-details.html">
+                            <h5>{{ post.title }}</h5>
+                            <span>{{ post.publication_date }}</span>
+                          </a>
+                        </li>
+                        {% endfor %}
                       </ul>
                     </div>
                   </div>
@@ -247,97 +217,84 @@ https://templatemo.com/tm-551-stand-blog
       </div>
     </section>
 
-    
     <footer>
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
             <ul class="social-icons">
-              <li><a href="#">Facebook</a></li>
-              <li><a href="#">Instgram</a></li>
+              <li><a href="https://www.facebook.com/profile.php?id=61561751296406">Facebook</a></li>
+              <li><a href="https://www.instagram.com/netfull1/">Instagram</a></li>
             </ul>
           </div>
           <div class="col-lg-12">
             <div class="copyright-text">
-              <p>Copyright 2020 Stand Blog Co.
-                    
-                 | Design: <a rel="nofollow" href="https://templatemo.com" target="_parent">TemplateMo</a></p>
+              <p>Made By Net Full</p>
             </div>
           </div>
         </div>
       </div>
     </footer>
 
-
     <!-- Bootstrap core JavaScript -->
-    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
-    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
-
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
     <!-- Additional Scripts -->
-    <script src="{% static 'assets/js/costom.js' %}"></script>
-    <script src="{% static 'assets/js/sowl.js' %}"></script>
-    <script src="{% static 'assets/js/slick.js' %}"></script>
-    <script src="{% static 'assets/js/isotop.js' %}"></script>
-    <script src="{% static 'assets/js/accordions.js' %}"></script>
+    <script src="{% static 'js/costom.js' %}"></script>
+    <script src="{% static 'js/sowl.js' %}"></script>
+    <script src="{% static 'js/slick.js' %}"></script>
+    <script src="{% static 'js/isotop.js' %}"></script>
+    <script src="{% static 'js/accordions.js' %}"></script>
 
+    <script>
+      document.getElementById('submit-comment').addEventListener('click', function () {
+        const form = document.getElementById('comment-form');
+        const postId = form.getAttribute('data-post-id');
+        const url = form.getAttribute('action');
+        const formData = new FormData(form);
+        const commentText = document.getElementById('content').value;
 
-
-    <script language = "text/Javascript"> 
-      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-      function clearField(t){                   //declaring the array outside of the
-      if(! cleared[t.id]){                      // function makes it static and global
-          cleared[t.id] = 1;  // you could use true and false, but that's more typing
-          t.value='';         // with more chance of typos
-          t.style.color='#fff';
-          }
-      }
+        if (commentText.trim()) {
+          fetch(url, {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              const commentList = document.getElementById('comments-list');
+              const newComment = document.createElement('li');
+              newComment.innerHTML = `
+                <div class="author-thumb" style="margin-right: 8px; flex-shrink: 0;">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" 
+                       alt="Unknown User" style="width: 50px; height: 50px; border-radius: 50%;">
+                </div>
+                <div class="right-content">
+                  <h4 style="margin: 0; font-size: 16px;">${data.user}
+                    <span style="font-size: 12px; color: #888; margin-left: 5px;">${data.timestamp}</span>
+                  </h4>
+                  <p style="margin: 5px 0; font-size: 14px;">${data.comment}</p>
+                </div>
+              `;
+              commentList.appendChild(newComment);
+              form.reset();
+            }
+          })
+          .catch(error => console.error('Error:', error));
+        }
+      });
     </script>
-
 <script>
-  document.getElementById('submit-comment').addEventListener('click', function () {
-  const form = document.getElementById('comment-form');
-  const postId = form.getAttribute('data-post-id');
-  const url = form.getAttribute('action');
-  const content = document.getElementById('content').value;
-  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-  if (!content.trim()) {
-    alert('Comment content cannot be empty.');
-    return;
-  }
-
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrfToken,
-    },
-    body: JSON.stringify({ content: content }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.error) {
-        alert(data.error);
-      } else {
-        // Append the new comment to the comments section
-        const commentsSection = document.querySelector('.comments-section ul');
-        const newComment = document.createElement('li');
-        newComment.innerHTML = `
-          <strong>${data.username}</strong> on ${data.created_at}:
-          <p>${data.content}</p>
-        `;
-        commentsSection.appendChild(newComment);
-
-        // Clear the textarea
-        document.getElementById('content').value = '';
-      }
-    })
-    .catch((error) => console.error('Error:', error));
-});
-
+  document.getElementById('view-all-comments').addEventListener('click', function() {
+    var allCommentsList = document.getElementById('all-comments-list');
+    if (allCommentsList.style.display === 'none') {
+      allCommentsList.style.display = 'block';
+      this.textContent = 'View Less Comments';
+    } else {
+      allCommentsList.style.display = 'none';
+      this.textContent = 'View All Comments';
+    }
+  });
 </script>
-
   </body>
-
 </html>

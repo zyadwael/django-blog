@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import welcome_view,create_post,delete_post,add_comment,register,user_login,user_logout,like_post,view_post,blog_search,contact
+from .views import welcome_view,create_post,delete_post,add_comment,register,user_login,user_logout,like_post,view_post,blog_search,contact,about,blog
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -15,7 +15,8 @@ urlpatterns = [
     path('post/<int:post_id>/', view_post, name='view_post'),  # URL for viewing a post
     path('blog_search/', blog_search, name='blog_search'),
     path('contact/', contact, name='contact'),
-
+    path('about/',about,name='about'),
+    path('blog/',blog,name='blog')
 ]
 
 

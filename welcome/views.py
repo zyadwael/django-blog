@@ -10,17 +10,16 @@ from django.core.mail import send_mail
 from django.conf import settings
 from .forms import ContactForm
 from django.contrib import messages
-
-
-
+from random import choice  # To pick a random post
 
 @login_required
 def welcome_view(request):
-    posts = BlogPost.objects.all()
-    for post in posts:
-        comments = post.comments.all()  # Get all comments related to this post
-        comments_count = comments.count()  # Count the number of comments
-
+    # Get all posts, sorted by the most recent based on 'publication_date'
+    posts = BlogPost.objects.all().order_by('-publication_date')  # Ordering by publication_date in descending order
+    recent_posts = posts[:5]  # Get the 5 most recent posts
+    
+    random_post = choice(posts)  # Select a random post
+    comments_count = random_post.comments.count()  # Count the comments for the random post
 
     if request.method == 'POST':
         post_id = request.POST.get('post_id')
@@ -35,15 +34,50 @@ def welcome_view(request):
         return redirect('welcome')
 
     return render(request, 'index.html', {
-        'posts': posts,
-        'comments_count': comments_count,  # Pass the count of comments to the template
-
+        'posts': posts,  # All posts if needed
+        'recent_posts': recent_posts,  # Pass the recent posts to the template
+        'random_post': random_post,  # Pass the random post to the template
+        'comments_count': comments_count,  # Pass the comment count for the post
     })
 
+@login_required
+def blog(request):
+    # Get all posts, sorted by the most recent based on 'publication_date'
+    posts = BlogPost.objects.all().order_by('-publication_date')  # Ordering by publication_date in descending order
+    recent_posts = posts[:5]  # Get the 5 most recent posts
+    
+    random_post = choice(posts)  # Select a random post
+    comments_count = random_post.comments.count()  # Count the comments for the random post
+
+    if request.method == 'POST':
+        post_id = request.POST.get('post_id')
+        post = get_object_or_404(BlogPost, id=post_id)
+        content = request.POST.get('content')
+        if content:
+            Comment.objects.create(
+                user=request.user,
+                post=post,
+                content=content
+            )
+        return redirect('welcome')
+
+    return render(request, 'blog.html', {
+        'posts': posts,  # All posts if needed
+        'recent_posts': recent_posts,  # Pass the recent posts to the template
+        'random_post': random_post,  # Pass the random post to the template
+        'comments_count': comments_count,  # Pass the comment count for the post
+    })
+
+
+
+def about(request):
+    return render(request, 'about.html')
 
 @login_required
 def view_post(request, post_id):
     post = get_object_or_404(BlogPost, id=post_id)
+    posts = BlogPost.objects.all().order_by('-publication_date')  # Ordering by publication_date in descending order
+    recent_posts = posts[:5]  # Get the 5 most recent posts
     comments = post.comments.all()  # Get all comments related to this post
     comments_count = comments.count()  # Count the number of comments
 
@@ -57,6 +91,7 @@ def view_post(request, post_id):
     return render(request, 'post-details.html', {
         'post': post,
         'comments': comments,
+        'recent_posts':recent_posts,
         'comments_count': comments_count,  # Pass the count of comments to the template
         'user_liked': request.user in post.likes.all()  # Check if the user already liked the post
     })
@@ -81,29 +116,37 @@ def blog_search(request):
 
 
 
+from django.core.mail import EmailMessage
+from django.conf import settings
+from django.shortcuts import render
+from .forms import ContactForm
+
 def contact(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
+            # Extract form data
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
             message = form.cleaned_data['message']
 
-            # Sending email
-            send_mail(
-                subject=f"Blog Contact from {name}",
-                message=message,
-                from_email=email,  # Using the sender's email
-                recipient_list=[settings.DEFAULT_FROM_EMAIL],  # Your email here
-                fail_silently=False,
+            # Create and send the email
+            email_message = EmailMessage(
+                subject=f"Inquiry from {name}",
+                body=f"Message from {name} ({email}):\n\n{message}",
+                from_email=settings.DEFAULT_FROM_EMAIL,  # Verified sender email
+                to=['zyadwael2009@gmail.com'],  # Replace with your email
+                reply_to=[email],  # User's email for replies
             )
+            email_message.send()
 
-            # Redirect or render a success page
-            return render(request, 'contact_success.html', {'name': name})
     else:
         form = ContactForm()
 
     return render(request, 'contact.html', {'form': form})
+
+
+
 
 def register(request):
     if request.method == 'POST':
@@ -183,24 +226,26 @@ def delete_post(request, post_id):
 @login_required
 def add_comment(request, post_id):
     post = get_object_or_404(BlogPost, id=post_id)
-    
-    content = request.POST.get('content')
-    
-    if content:
-        comment = Comment.objects.create(
-            user=request.user,
-            post=post,
-            content=content
-        )
-        
-        # Return a JSON response with the comment details to update the frontend dynamically
-        return JsonResponse({
-            'username': comment.user.username,
-            'created_at': comment.created_at.strftime('%B %d, %Y, %I:%M %p'),
-            'content': comment.content
-        })
-    else:
-        return JsonResponse({'error': 'You must provide content for your comment.'}, status=400)
+
+    if request.method == 'POST':
+        content = request.POST.get('content')
+
+        if content:
+            # Create the new comment
+            comment = Comment.objects.create(
+                user=request.user,
+                post=post,
+                content=content
+            )
+
+            # Return a JSON response with the comment details to update the frontend dynamically
+            return JsonResponse({
+                'username': comment.user.username,
+                'created_at': comment.created_at.strftime('%B %d, %Y, %I:%M %p'),
+                'content': comment.content
+            })
+        else:
+            return JsonResponse({'error': 'You must provide content for your comment.'}, status=400)
 
 @login_required
 def like_post(request, post_id):

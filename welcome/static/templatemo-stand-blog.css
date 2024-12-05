@@ -474,7 +474,6 @@ header .navbar {
 }
 
 .blog-posts .down-content p {
-	padding: 25px 0px;
 	margin: 25px 0px;
 	border-top: 1px solid #eee;
 	border-bottom: 1px solid #eee;
@@ -563,7 +562,16 @@ ul.page-numbers li a:hover {
 	padding-bottom: 15px;
 	margin-bottom: 25px;
 }
-
+.navbar-brand {
+	text-align: center;
+	display: inline-block;
+  }
+  
+  .navbar-logo {
+	max-width: 100px; /* Adjust image size */
+	display: block;
+	margin: 0 auto;
+  }
 .blog-posts .comments {
 	margin-top: 30px;
 }
@@ -571,7 +579,6 @@ ul.page-numbers li a:hover {
 .blog-posts .comments ul li {
 	display: inline-block;
 	margin-bottom: 20px;
-	padding-bottom: 20px;
 	border-bottom: 1px solid #eee;
 }
 
@@ -1090,4 +1097,14 @@ footer p a:hover {
 		margin-left: 0px;
 		margin-top: 60px;
 	}
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    margin: 0;
+    padding: 0;
 }
