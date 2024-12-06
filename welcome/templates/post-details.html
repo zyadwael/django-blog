@@ -107,7 +107,7 @@
 
                 <div class="sidebar-item comments">
                   <div class="sidebar-heading">
-                    <h2>{{ comments_count }} Comments</h2>
+                    <h2 id="comments-count">{{ comments_count }} Comments</h2>
                   </div>
                   <div class="content">
                     <ul id="comments-list" style="list-style: none; padding: 0;">
@@ -148,6 +148,7 @@
                     {% endif %}
                   </div>
                 </div>
+                
                 
 
 
@@ -248,41 +249,56 @@
     <script>
       document.getElementById('submit-comment').addEventListener('click', function () {
         const form = document.getElementById('comment-form');
-        const postId = form.getAttribute('data-post-id');
         const url = form.getAttribute('action');
         const formData = new FormData(form);
         const commentText = document.getElementById('content').value;
-
+    
         if (commentText.trim()) {
           fetch(url, {
             method: 'POST',
-            body: formData
+            body: formData,
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+            }
           })
           .then(response => response.json())
           .then(data => {
-            if (data.success) {
+            if (data.username) {
               const commentList = document.getElementById('comments-list');
               const newComment = document.createElement('li');
+              newComment.style = 'margin-bottom: 15px; display: flex; align-items: center;';
               newComment.innerHTML = `
                 <div class="author-thumb" style="margin-right: 8px; flex-shrink: 0;">
                   <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" 
                        alt="Unknown User" style="width: 50px; height: 50px; border-radius: 50%;">
                 </div>
                 <div class="right-content">
-                  <h4 style="margin: 0; font-size: 16px;">${data.user}
-                    <span style="font-size: 12px; color: #888; margin-left: 5px;">${data.timestamp}</span>
+                  <h4 style="margin: 0; font-size: 16px;">${data.username}
+                    <span style="font-size: 12px; color: #888; margin-left: 5px;">${data.created_at}</span>
                   </h4>
-                  <p style="margin: 5px 0; font-size: 14px;">${data.comment}</p>
+                  <p style="margin: 5px 0; font-size: 14px;">${data.content}</p>
                 </div>
               `;
-              commentList.appendChild(newComment);
+              commentList.insertBefore(newComment, commentList.firstChild);
               form.reset();
             }
           })
           .catch(error => console.error('Error:', error));
         }
       });
+    
+      document.getElementById('view-all-comments').addEventListener('click', function () {
+        const allCommentsList = document.getElementById('all-comments-list');
+        if (allCommentsList.style.display === 'none') {
+          allCommentsList.style.display = 'block';
+          this.textContent = 'Hide All Comments';
+        } else {
+          allCommentsList.style.display = 'none';
+          this.textContent = 'View All Comments';
+        }
+      });
     </script>
+    
 <script>
   document.getElementById('view-all-comments').addEventListener('click', function () {
     document.getElementById('all-comments-list').style.display = 'block';
