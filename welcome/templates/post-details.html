@@ -111,7 +111,7 @@
                   </div>
                   <div class="content">
                     <ul id="comments-list" style="list-style: none; padding: 0;">
-                      {% for comment in comments %}
+                      {% for comment in visible_comments %}
                       <li style="margin-bottom: 15px; display: flex; align-items: center;">
                         <div class="author-thumb" style="margin-right: 8px; flex-shrink: 0;">
                           <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" 
@@ -126,11 +126,11 @@
                       </li>
                       {% endfor %}
                     </ul>
-                    
-                    {% if comments_count > 4 %}
+                
+                    {% if remaining_comments %}
                     <a href="javascript:void(0);" id="view-all-comments" style="font-size: 14px; color: #007bff; text-decoration: none;">View All Comments</a>
                     <ul id="all-comments-list" style="list-style: none; padding: 0; display: none;">
-                      {% for comment in comments.all %}
+                      {% for comment in remaining_comments %}
                       <li style="margin-bottom: 15px; display: flex; align-items: center;">
                         <div class="author-thumb" style="margin-right: 8px; flex-shrink: 0;">
                           <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" 
@@ -145,7 +145,6 @@
                       </li>
                       {% endfor %}
                     </ul>
-                    
                     {% endif %}
                   </div>
                 </div>
@@ -285,15 +284,9 @@
       });
     </script>
 <script>
-  document.getElementById('view-all-comments').addEventListener('click', function() {
-    var allCommentsList = document.getElementById('all-comments-list');
-    if (allCommentsList.style.display === 'none') {
-      allCommentsList.style.display = 'block';
-      this.textContent = 'View Less Comments';
-    } else {
-      allCommentsList.style.display = 'none';
-      this.textContent = 'View All Comments';
-    }
+  document.getElementById('view-all-comments').addEventListener('click', function () {
+    document.getElementById('all-comments-list').style.display = 'block';
+    this.style.display = 'none';
   });
 </script>
   </body>

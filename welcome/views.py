@@ -81,6 +81,10 @@ def view_post(request, post_id):
     comments = post.comments.all()  # Get all comments related to this post
     comments_count = comments.count()  # Count the number of comments
 
+    # Slice comments for display
+    visible_comments = comments[:4]  # First 4 comments
+    remaining_comments = comments[4:]  # Rest of the comments
+
     if request.method == 'POST':
         # Handle adding a new comment
         content = request.POST.get('content')
@@ -90,8 +94,9 @@ def view_post(request, post_id):
 
     return render(request, 'post-details.html', {
         'post': post,
-        'comments': comments,
-        'recent_posts':recent_posts,
+        'visible_comments': visible_comments,
+        'remaining_comments': remaining_comments,
+        'recent_posts': recent_posts,
         'comments_count': comments_count,  # Pass the count of comments to the template
         'user_liked': request.user in post.likes.all()  # Check if the user already liked the post
     })
