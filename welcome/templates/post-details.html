@@ -95,7 +95,7 @@
                     </div>
                     <div class="down-content">
                       <span>{{post.title}}</span>
-                      <a href="post-details.html"><h4>{{post.content}}</h4></a>
+                      <a href="/post/{{post.id}}"><h4>{{post.content}}</h4></a>
                       <ul class="post-info">
                         <li><a href="#">{{post.author}}</a></li>
                         <li><a href="#">{{post.publication_date}}</a></li>
@@ -113,11 +113,11 @@
                     <ul id="comments-list" style="list-style: none; padding: 0;">
                       {% for comment in visible_comments %}
                       <li style="margin-bottom: 15px; display: flex; align-items: center;">
-                        <div class="author-thumb" style="margin-right: 8px; flex-shrink: 0;">
+                        <div class="author-thumb" style="margin-right: 0; flex-shrink: 0;">
                           <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" 
                                alt="Unknown User" style="width: 50px; height: 50px; border-radius: 50%;">
                         </div>
-                        <div class="right-content">
+                        <div class="right-content" style="margin-left: 8px;">
                           <h4 style="margin: 0; font-size: 16px;">{{ comment.user }}
                             <span style="font-size: 12px; color: #888; margin-left: 5px;">{{ comment.created_at }}</span>
                           </h4>
@@ -132,11 +132,11 @@
                     <ul id="all-comments-list" style="list-style: none; padding: 0; display: none;">
                       {% for comment in remaining_comments %}
                       <li style="margin-bottom: 15px; display: flex; align-items: center;">
-                        <div class="author-thumb" style="margin-right: 8px; flex-shrink: 0;">
+                        <div class="author-thumb" style="margin-right: 0; flex-shrink: 0;">
                           <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" 
                                alt="Unknown User" style="width: 50px; height: 50px; border-radius: 50%;">
                         </div>
-                        <div class="right-content">
+                        <div class="right-content" style="margin-left: 8px;">
                           <h4 style="margin: 0; font-size: 16px;">{{ comment.user }}
                             <span style="font-size: 12px; color: #888; margin-left: 5px;">{{ comment.created_at }}</span>
                           </h4>
@@ -148,6 +148,7 @@
                     {% endif %}
                   </div>
                 </div>
+                
                 
                 
 
